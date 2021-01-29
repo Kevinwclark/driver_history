@@ -1,5 +1,17 @@
 import argparse
 import sys
+# from collections import defaultdict
+
+
+def initialize_drivers(filename):
+    with open(filename, 'r') as f:
+        x = f.read().splitlines()
+        for line in x:
+            y = line.split(' ')
+            if y[0] == "Driver":
+                print('Found driver')
+        
+        
 
 
 def main(args):
@@ -13,10 +25,9 @@ def main(args):
         sys.exit(1)
 
     filename = args[0]
+    initialize_drivers(filename)
 
-    with open(filename, 'r') as f:
-        x = f.read()
-        print(x)
+    
 
 if __name__ == "__main__":
     main(sys.argv[1:])
