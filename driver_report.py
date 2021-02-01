@@ -1,20 +1,23 @@
 import argparse
 import sys
+import datetime
+from datetime import timedelta
 from collections import defaultdict
 
 
 d = defaultdict(list)
 
-
 def initialize_driver(driver):
-    d[driver] = []
+    d[driver]
     return d
 
 
-
-def driver_data():
-    pass
-
+def driver_data(driver, start, stop, miles):
+    x = datetime.datetime.strptime(start, '%H:%M')
+    y = datetime.datetime.strptime(stop, '%H:%M')
+    drive_time = (timedelta(hours=y.hour, minutes=y.minute) - timedelta(hours=x.hour, minutes=x.minute))
+    print('here is drive time', drive_time)
+    
 
 def command_finder(filename):
     with open(filename, 'r') as f:
@@ -25,7 +28,12 @@ def command_finder(filename):
                 driver = y[1]
                 initialize_driver(driver)
             elif y[0] == 'Trip':
-                driver_data()
+                print("here is the line",line)
+                driver = y[1]
+                start = y[2]
+                stop = y[3]
+                miles = y[4]
+                driver_data(driver, start, stop, miles)
         
         
 
