@@ -1,15 +1,31 @@
 import argparse
 import sys
-# from collections import defaultdict
+from collections import defaultdict
 
 
-def initialize_drivers(filename):
+d = defaultdict(list)
+
+
+def initialize_driver(driver):
+    d[driver] = []
+    return d
+
+
+
+def driver_data():
+    pass
+
+
+def command_finder(filename):
     with open(filename, 'r') as f:
         x = f.read().splitlines()
         for line in x:
             y = line.split(' ')
             if y[0] == "Driver":
-                print('Found driver')
+                driver = y[1]
+                initialize_driver(driver)
+            elif y[0] == 'Trip':
+                driver_data()
         
         
 
@@ -25,8 +41,9 @@ def main(args):
         sys.exit(1)
 
     filename = args[0]
-    initialize_drivers(filename)
+    command_finder(filename)
 
+    print(d)
     
 
 if __name__ == "__main__":
