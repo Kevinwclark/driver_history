@@ -15,8 +15,11 @@ def initialize_driver(driver):
 def driver_data(driver, start, stop, miles):
     x = datetime.datetime.strptime(start, '%H:%M')
     y = datetime.datetime.strptime(stop, '%H:%M')
-    drive_time = (timedelta(hours=y.hour, minutes=y.minute) - timedelta(hours=x.hour, minutes=x.minute))
-    print('here is drive time', drive_time)
+    td = timedelta(hours=y.hour, minutes=y.minute) - timedelta(hours=x.hour, minutes=x.minute)
+    hours = td.seconds / 3600
+    print('hours', hours)
+    print('average speed', float(miles) / hours)
+    
     
 
 def command_finder(filename):
