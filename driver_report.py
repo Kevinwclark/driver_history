@@ -5,7 +5,6 @@ import datetime
 from datetime import timedelta
 from collections import defaultdict
 
-
 drivers = defaultdict(dict)
 
 
