@@ -3,7 +3,6 @@ import driver_report as dr
 
 
 filename = 'input.txt'
-driver_set = {'Dan': {}, 'Lauren': {}, 'Kumi': {}}
 
 
 class TestDriver(unittest.TestCase):
@@ -29,10 +28,31 @@ class TestDriver(unittest.TestCase):
             dr.initialize_driver(i)
         for index, driver in enumerate(dr.drivers):
             self.assertEqual(names[index], dr.drivers[driver].name)
+            self.assertIsInstance(dr.drivers[driver], dr.Driver)
 
-    def test_driver_data_discard(self):
-        """Checks if data is discarded"""
-        self.fail('Driver data discard test not implemented')
+    def test_driver_data_discard_fast(self):
+        """Checks if data is discarded if average > 100"""
+        driver = "Dan"
+        start = "07:15"
+        stop = "07:45"
+        miles = "51"
+        dr.initialize_driver(driver)
+        self.assertIsInstance(dr.drivers[driver], dr.Driver)
+        dr.driver_data(driver, start, stop, miles)
+        self.assertEqual(dr.drivers[driver].miles, 0)
+        self.assertEqual(dr.drivers[driver].hours, 0)
+
+    def test_driver_data_discard_slow(self):
+        """Checks if data is discarded if average < 5"""
+        driver = "Dan"
+        start = "07:15"
+        stop = "07:45"
+        miles = "2"
+        dr.initialize_driver(driver)
+        self.assertIsInstance(dr.drivers[driver], dr.Driver)
+        dr.driver_data(driver, start, stop, miles)
+        self.assertEqual(dr.drivers[driver].miles, 0)
+        self.assertEqual(dr.drivers[driver].hours, 0)
 
     def test_driver_data_times(self):
         """Checks the driver times."""

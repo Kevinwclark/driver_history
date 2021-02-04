@@ -45,7 +45,6 @@ def driver_data(driver, start, stop, miles):
         person.hours += hours
 
 
-# check for quotes
 def command_finder(filename):
     """Open file and parse line commands"""
     with open(filename, 'r') as f:
@@ -66,7 +65,7 @@ def command_finder(filename):
 def main(args):
     """Parse terminal command"""
     parser = argparse.ArgumentParser(
-        description="Receives driver data and creates report."
+        description='Receives driver data and creates report.'
     )
     parser.add_argument('filename', help='filename to dig into')
     ns = parser.parse_args(args)
