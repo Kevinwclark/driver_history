@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/usr/bin/python",
+    "python.pythonPath": "/Users/kevinclark/.pyenv/shims/python",
     "python.testing.unittestArgs": [
         "-v",
         "-s",
@@ -9,5 +9,8 @@
     ],
     "python.testing.pytestEnabled": false,
     "python.testing.nosetestsEnabled": false,
-    "python.testing.unittestEnabled": true
+    "python.testing.unittestEnabled": true,
+    "python.testing.pytestArgs": [
+        "tests"
+    ]
 }

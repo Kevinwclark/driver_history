@@ -1,73 +1,93 @@
+#!/usr/bin/env python3
 import argparse
 import sys
 import datetime
-import operator
 from datetime import timedelta
 from collections import defaultdict
 
 
-d = defaultdict(dict)
+drivers = defaultdict(dict)
+
+
 class Driver:
     def __init__(self, name, miles=0, hours=0):
         self.name = name
         self.miles = miles
         self.hours = hours
-    
+
+    def __str__(self):
+        return f'{self.name}, {self.miles}, {self.hours}'
+
     def average(self):
-        return "%s: %s miles @ %s." % (self.name, self.miles, round(self.miles / self.hours))
+        return round(self.miles / self.hours)
 
 
 def initialize_driver(driver):
-    d[driver] = Driver(driver)
+    """Create driver object within a defaultdict"""
+    drivers[driver] = Driver(driver)
 
 
 def driver_data(driver, start, stop, miles):
-    x = datetime.datetime.strptime(start, '%H:%M')
-    y = datetime.datetime.strptime(stop, '%H:%M')
-    td = timedelta(hours=y.hour, minutes=y.minute) - timedelta(hours=x.hour, minutes=x.minute)
+    """
+    Update driver class with miles and hours,
+    discarding averages not needed.
+    """
+    start_time = datetime.datetime.strptime(start, '%H:%M')
+    stop_time = datetime.datetime.strptime(stop, '%H:%M')
+    start_delta = timedelta(hours=start_time.hour, minutes=start_time.minute)
+    stop_delta = timedelta(hours=stop_time.hour, minutes=stop_time.minute)
+    td = stop_delta - start_delta
     hours = td.seconds / 3600
     mile = round(float(miles))
-    d[driver].miles += mile
-    d[driver].hours += hours
-    
+    average = mile / hours
+    if average >= 5 and average <= 100:
+        person = drivers[driver]
+        person.miles += mile
+        person.hours += hours
 
+
+# check for quotes
 def command_finder(filename):
     """Open file and parse line commands"""
     with open(filename, 'r') as f:
-        x = f.read().splitlines()
-        for line in x:
-            y = line.split(' ')
-            if y[0] == "Driver":
-                driver = y[1]
-                initialize_driver(driver)
-            elif y[0] == 'Trip':
-                driver = y[1]
-                start = y[2]
-                stop = y[3]
-                miles = y[4]
-                driver_data(driver, start, stop, miles)
-        
+        lines = f.read().splitlines()
+    for line in lines:
+        words = line.split(' ')
+        if words[0] == 'Driver':
+            driver = words[1]
+            initialize_driver(driver)
+        elif words[0] == 'Trip':
+            driver = words[1]
+            start = words[2]
+            stop = words[3]
+            miles = words[4]
+            driver_data(driver, start, stop, miles)
+
 
 def main(args):
     """Parse terminal command"""
     parser = argparse.ArgumentParser(
         description="Receives driver data and creates report."
     )
-    if not args:
-        parser.print_usage()
-        sys.exit(1)
+    parser.add_argument('filename', help='filename to dig into')
+    ns = parser.parse_args(args)
 
-    filename = args[0]
+    filename = ns.filename
     command_finder(filename)
-    
-    sorting = sorted(d, key=lambda name: d[name].miles, reverse=True)
 
-    for driver in sorting:
-        if d[driver].miles == 0:
-            print("%s: 0 miles" % d[driver].name)
-        else:
-            print(d[driver].average())
+    sorted_drivers = sorted(
+                drivers,
+                key=lambda name: drivers[name].miles,
+                reverse=True
+            )
+
+    for driver in sorted_drivers:
+        avg = 0 if drivers[driver].hours == 0 else drivers[driver].average()
+        string = f"{drivers[driver].name}: {drivers[driver].miles} miles"
+        if avg > 0:
+            string += f" @ {avg} mph"
+        print(string)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-
