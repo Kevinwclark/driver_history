@@ -5,7 +5,7 @@ import datetime
 from datetime import timedelta
 from collections import defaultdict
 
-drivers = defaultdict(dict)
+drivers = defaultdict()
 
 
 class Driver:
@@ -49,6 +49,7 @@ def command_finder(filename):
     """Open file and parse line commands"""
     with open(filename, 'r') as f:
         lines = f.read().splitlines()
+        print(lines)
     for line in lines:
         words = line.split(' ')
         if words[0] == 'Driver':
@@ -67,9 +68,8 @@ def main(args):
     parser = argparse.ArgumentParser(
         description='Receives driver data and creates report.'
     )
-    parser.add_argument('filename', help='filename to dig into')
+    parser.add_argument('filename', help='file to be processed')
     ns = parser.parse_args(args)
-
     filename = ns.filename
     command_finder(filename)
 
@@ -78,7 +78,6 @@ def main(args):
                 key=lambda name: drivers[name].miles,
                 reverse=True
             )
-
     for driver in sorted_drivers:
         avg = 0 if drivers[driver].hours == 0 else drivers[driver].average()
         string = f"{drivers[driver].name}: {drivers[driver].miles} miles"

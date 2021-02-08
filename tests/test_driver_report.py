@@ -1,5 +1,6 @@
 import unittest
 import driver_report as dr
+import subprocess
 
 
 filename = 'input.txt'
@@ -66,7 +67,20 @@ class TestDriver(unittest.TestCase):
 
     def test_input_file(self):
         """Test end to end functionality"""
-        self.fail('Input file test not implemented')
+        sample = ['Lauren', 'Dan', 'Kumi']
+        dr.main(['input.txt'])
+        drivers = dr.drivers
+        sorted_drivers = sorted(
+                drivers,
+                key=lambda name: dr.drivers[name].miles,
+                reverse=True
+            )
+        self.assertEqual(sorted_drivers, sample)
+
+    def test_flake8(self):
+        """Checking for PEP8/flake8 compliance"""
+        result = subprocess.run(['flake8', "driver_report.py"])
+        self.assertEqual(result.returncode, 0)
 
 
 if __name__ == "__main__":
