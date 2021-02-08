@@ -2,7 +2,6 @@
 import argparse
 import sys
 import datetime
-from datetime import timedelta
 from collections import defaultdict
 
 drivers = defaultdict()
@@ -33,9 +32,7 @@ def driver_data(driver, start, stop, miles):
     """
     start_time = datetime.datetime.strptime(start, '%H:%M')
     stop_time = datetime.datetime.strptime(stop, '%H:%M')
-    start_delta = timedelta(hours=start_time.hour, minutes=start_time.minute)
-    stop_delta = timedelta(hours=stop_time.hour, minutes=stop_time.minute)
-    td = stop_delta - start_delta
+    td = stop_time - start_time
     hours = td.seconds / 3600
     mile = round(float(miles))
     average = mile / hours
@@ -49,7 +46,6 @@ def command_finder(filename):
     """Open file and parse line commands"""
     with open(filename, 'r') as f:
         lines = f.read().splitlines()
-        print(lines)
     for line in lines:
         words = line.split(' ')
         if words[0] == 'Driver':
