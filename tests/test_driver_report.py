@@ -9,6 +9,7 @@ filename = 'input.txt'
 class TestDriver(unittest.TestCase):
 
     def test_command_finder(self):
+        """Checks that commands are parsed"""
         driver = 0
         test = 0
         with open(filename, 'r') as f:
