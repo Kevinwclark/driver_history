@@ -55,13 +55,13 @@ After I have sorted all drivers by miles, I jumped into a loop on line 77. Start
 The tests I decided on are as follows: 
 
 ```
-test_command_finder: Testing commands coming in.
-test_initialize_driver: Checks for Driver initialization.
-test_driver_data_discard_fast: Checks if data is discarded if average > 100.
-test_driver_data_discard_slow: Checks if data is discarded if average < 5.
-test_driver_data_times: Checks the driver times.
-test_input_file: Test end to end functionality.
-test_flake8: Checking for PEP8/flake8 compliance.
+test_command_finder --> Testing commands coming in.
+test_initialize_driver --> Checks for Driver initialization.
+test_driver_data_discard_fast --> Checks if data is discarded if average > 100.
+test_driver_data_discard_slow --> Checks if data is discarded if average < 5.
+test_driver_data_times --> Checks the driver times.
+test_input_file --> Test end to end functionality.
+test_flake8 --> Checking for PEP8/flake8 compliance.
 ```
 
 ## Built With
