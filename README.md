@@ -68,7 +68,4 @@ test_flake8 --> Checking for PEP8/flake8 compliance.
 
 * [Python](https://www.python.org/) - Version 3.9.0
 
-## Author
-
-* **Kevin Clark** - [GitHub](https://github.com/Kevinwclark)
-Thank you for this opportunity to present code. 
+```Thank you for this opportunity to present code. ```
