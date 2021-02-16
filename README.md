@@ -64,7 +64,7 @@ test_input_file --> Test end to end functionality.
 test_flake8 --> Checking for PEP8/flake8 compliance.
 ```
 
-## Built With
+## Built With:
 
 * [Python](https://www.python.org/) - Version 3.9.0
 
